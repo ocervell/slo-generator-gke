@@ -1,0 +1,35 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slo-generator
+spec:
+  schedule: "* * * * */1"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: slo-generator
+            image: gcr.io/rnm-shared-devops/slo-generator
+            args:
+            - -f
+            - /etc/config/slos/
+            - -b
+            - /etc/config/error_budget_policy.yaml
+            - -e
+            - "true"
+            volumeMounts:
+              - name: error-budget-policy
+                mountPath: /etc/config/error_budget_policy.yaml
+                subPath: error_budget_policy.yaml
+              - name: slos
+                mountPath: /etc/config/slos
+          volumes:
+            - name: error-budget-policy
+              configMap:
+                name: config
+            - name: slos
+              configMap:
+                name: slos
