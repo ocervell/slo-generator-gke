@@ -73,6 +73,7 @@ To use the `slo-generator` with Cloud Monitoring (backend / exporter):
 
 
 * `StackdriverServiceMonitoring` backend:
+  * `roles/monitoring.viewer` on the Stackdriver host project.
   * `roles/monitoring.servicesEditor` on the Stackdriver host project.
 
 #### BigQuery
