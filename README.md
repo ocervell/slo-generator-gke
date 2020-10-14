@@ -11,12 +11,12 @@ This allows to set up the SLO reporting pipeline on GKE directly.
 ## Build the Docker image
 Clone the `slo-generator` repo:
 ```
-git clone https://github.com/GoogleCloudPlatform/professional-services
+git clone https://github.com/google/slo-generator
 ```
 
 Build the `slo-generator` image using Cloud Build:
 ```
-cd tools/slo-generator
+cd slo-generator
 gcloud builds submit --tag=gcr.io/<PROJECT_ID>/slo-generator --project=<PROJECT_ID>
 ```
 
@@ -92,8 +92,8 @@ To use the `slo-generator` with PubSub (exporter only):
 
 **Build the Docker image:**
 ```
-git clone https://github.com/GoogleCloudPlatform/professional-services
-cd tools/slo-generator
+git clone https://github.com/google/slo-generator
+cd slo-generator
 docker build -t slo-generator .
 ```
 
