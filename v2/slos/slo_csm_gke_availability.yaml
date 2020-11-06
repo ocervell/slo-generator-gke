@@ -16,6 +16,12 @@ apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
   name: gke-app-availability
+  labels:
+    service_name: gke
+    feature_name: app
+    slo_name: availability
+    team_name: app-team-1
+    env: dev
 spec:
   description: 98% of GKE HTTP requests have valid HTTP response codes
   goal: 0.98

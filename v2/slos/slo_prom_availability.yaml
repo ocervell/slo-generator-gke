@@ -16,6 +16,12 @@ apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
   name: prom-metrics-availability
+  labels:
+    service_name: prom
+    feature_name: metrics
+    slo_name: availability
+    team_name: app-team-1
+    env: dev
 spec:
   description: 99.9% of Prometheus requests have a valid HTTP status code
   goal: 0.999

@@ -15,7 +15,13 @@
 apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
-  name: elk-test-ratio
+  name: elk-test-errors
+  labels:
+    service_name: elk
+    feature_name: test
+    slo_name: errors
+    team_name: app-team-1
+    env: dev
 spec:
   description: <10% of errors in ELK records
   goal: 0.1

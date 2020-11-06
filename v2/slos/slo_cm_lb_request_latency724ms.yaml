@@ -16,6 +16,12 @@ apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
   name: lb-latency724ms
+  labels:
+    service_name: lb
+    feature_name: app
+    slo_name: latency724ms
+    team_name: app-team-1
+    env: dev
 spec:
   description: 98% of HTTP Load Balancer requests have latency < 724ms
   goal: 0.98

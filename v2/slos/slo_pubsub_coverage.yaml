@@ -3,6 +3,12 @@ apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
   name: generator-pubsub-ack
+  labels:
+    service_name: generator
+    feature_name: pubsub
+    slo_name: coverage
+    team_name: app-team-1
+    env: dev
 spec:
   description: 99% of outstanding PubSub messages are acknowledged
   goal: 0.99
@@ -16,5 +22,5 @@ spec:
       resource.type="pubsub_subscription"
     filter_bad:  >
       project="${project_id}"
-      metric.type="pubsub.googleapis.com/subscription/num_outstanding_messages"
+      metric.type="pubsub.googleapis.com/subscription/num_undelivered_messages"
       resource.type="pubsub_subscription"

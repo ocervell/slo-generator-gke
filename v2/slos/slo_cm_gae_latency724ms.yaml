@@ -16,6 +16,12 @@ apiVersion: cloud.google.com/v1
 kind: ServiceLevelObjective
 metadata:
   name: gae-app-latency724ms
+  labels:
+    service_name: gae
+    feature_name: app
+    slo_name: latency724ms
+    team_name: app-team-1
+    env: dev
 spec:
   description: 99.9% of App Engine HTTP requests have latency < 724ms
   goal: 0.999
