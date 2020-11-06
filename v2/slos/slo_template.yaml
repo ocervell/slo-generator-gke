@@ -1,0 +1,59 @@
+# Copyright 2019 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#            http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+apiVersion: cloud.google.com/v1
+kind: ServiceLevelObjective
+metadata:
+  # SLO name. Unique identifier for your SLO. Should be immutable once set.
+  name: gae-app-latency724ms
+  # Additional labels to append to the SLO report.
+  labels:
+    service_name: gae
+    feature_name: app
+    team_name: app-team-1
+spec:
+  # SLO description. Give your SLO an explicit description so that you can
+  # understand what the SLO means in one glance.
+  description: 99.9% of App Engine HTTP requests have latency < 724ms
+
+  # SLO goal (also known as target). This is a float, not a percent value, so
+  # 99.9% becomes 0.999.
+  goal: 0.999
+
+  # Backend to fetch metrics from. See `backends.yaml` for configuring them.
+  backend: cloud_monitoring
+
+  # Export destinations to export SLO reports to. See `exporters.yaml` for
+  # configuring them.
+  exporters: [pubsub, cloud_monitoring]
+
+  # Method to use to compute the SLO. Methods can be different for each backend,
+  # but common ones are `distribution_cut` or `good_bad_ratio`.
+  method: distribution_cut
+
+  # Service Level Indicator configuration, i.e "what metrics will I fetch to
+  # compute my SLI ?". The config fields change based on the method and backend
+  # types. See the backend-specific documentation.
+  serviceLevelIndicator:
+    threshold_bucket: 19
+    good_below_threshold: true
+    filter_valid: project="rnm-slo-916a"
+      resource.labels.module_id="search"
+      metric.type="appengine.googleapis.com/http/server/response_latencies"
+      ( metric.labels.response_code = 429 OR metric.labels.response_code = 200 OR
+        metric.labels.response_code = 201 OR metric.labels.response_code = 202 OR
+        metric.labels.response_code = 203 OR metric.labels.response_code = 204 OR
+        metric.labels.response_code = 205 OR metric.labels.response_code = 206 OR
+        metric.labels.response_code = 207 OR metric.labels.response_code = 208 OR
+        metric.labels.response_code = 226 OR metric.labels.response_code = 304 )

@@ -1,0 +1,34 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slo-generator
+spec:
+  schedule: "* * * * */1"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: slo-generator
+            image: gcr.io/rnm-shared-devops/slo-generator
+            args:
+            - -f
+            - /etc/config/slos/
+            - -c
+            - /etc/config/config.yaml
+            - -e
+            - "true"
+            volumeMounts:
+              - name: config
+                mountPath: /etc/config/config.yaml
+                subPath: config.yaml
+              - name: slos
+                mountPath: /etc/config/slos
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: slos
+              configMap:
+                name: slos
