@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - slos/*
+    # paths:
+    #   - slos/*
 jobs:
   deploy-gke-slos:
     runs-on: ubuntu-latest

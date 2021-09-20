@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-    paths:
-      - app.yaml
-      - config.yaml
+    # paths:
+    #   - app.yaml
+    #   - config.yaml
 jobs:
   deploy-gke-service:
     runs-on: ubuntu-latest
