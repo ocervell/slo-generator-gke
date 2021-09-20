@@ -20,4 +20,4 @@ jobs:
         run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --project=${{ secrets.PROJECT_ID }} --region=${{ secrets.REGION }}
 
       - name: Install dependencies
-        run: ./deploy_gke_service.sh    
+        run: ./deploy_k8s_service.sh    
