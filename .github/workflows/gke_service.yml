@@ -17,7 +17,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
       - name: Get container credentials
-        run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --project=${{ secrets.PROJECT_ID }}
+        run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --project=${{ secrets.PROJECT_ID }} --region=${{ secrets.REGION }}
 
       - name: Install dependencies
         run: ./deploy_gke_service.sh    

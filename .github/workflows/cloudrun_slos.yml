@@ -20,4 +20,5 @@ jobs:
         env:
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          REGION: ${{ secrets.REGION }}
           
