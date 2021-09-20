@@ -28,8 +28,8 @@ spec:
   backend: cloud_monitoring
   exporters: [pubsub, cloud_monitoring]
   method: basic_sli
-  serviceLevelIndicator:
-    appEngine:
-      projectId: my-test-project
-      moduleId: default
+  service_level_indicator:
+    app_engine:
+      project_id: my-test-project
+      module_id: default
     availability: {}

@@ -1,0 +1,24 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy-cloudrun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Deploy to Cloud Run
+        run: make deploy_cloudrun
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
+  deploy-gke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install dependencies
+        run: make deploy_gke
+        env:

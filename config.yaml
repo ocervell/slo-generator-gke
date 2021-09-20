@@ -28,7 +28,7 @@ backends:
     url: localhost
 
 exporters:
-  cloud-monitoring:
+  cloud_monitoring:
     projectId: slo-generator-ci-a2b4
     metrics:
       - type: custom.googleapis.com/slo/error_budget_burn_rate
