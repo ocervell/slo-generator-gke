@@ -25,7 +25,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: slo-generator
-            image: gcr.io/slo-generator-ci-a2b4/slo-generator
+            image: gcr.io/slo-generator-ci-a2b4/slo-generator:2.0.0-rc3
             args:
             - -f
             - /etc/config/slos/
