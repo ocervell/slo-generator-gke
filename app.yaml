@@ -25,22 +25,22 @@ spec:
           restartPolicy: Never
           containers:
           - name: slo-generator
-            image: gcr.io/rnm-shared-devops/slo-generator
+            image: gcr.io/slo-generator-ci-a2b4/slo-generator
             args:
             - -f
             - /etc/config/slos/
-            - -b
-            - /etc/config/error_budget_policy.yaml
+            - -c
+            - /etc/config/config.yaml
             - -e
             - "true"
             volumeMounts:
               - name: error-budget-policy
-                mountPath: /etc/config/error_budget_policy.yaml
-                subPath: error_budget_policy.yaml
+                mountPath: /etc/config/config.yaml
+                subPath: config.yaml
               - name: slos
                 mountPath: /etc/config/slos
           volumes:
-            - name: error-budget-policy
+            - name: config
               configMap:
                 name: config
             - name: slos
