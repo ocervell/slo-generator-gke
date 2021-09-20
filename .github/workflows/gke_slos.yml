@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - slos/*
+jobs:
   deploy-gke-slos:
     runs-on: ubuntu-latest
     steps:

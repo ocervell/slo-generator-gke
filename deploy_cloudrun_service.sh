@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 echo "⭐ Creating GCS bucket to hold SLO configurations ..."
 gsutil mb -p ${PROJECT_ID} gs://${BUCKET_NAME} || echo "Bucket ${BUCKET_NAME} already created."
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "⭐ Getting Cloud Run service URL ..."
 SERVICE_URL=`gcloud run services describe slo-generator --region=${REGION} --project=${PROJECT_ID} --format="value(status.address.url)"`
 
