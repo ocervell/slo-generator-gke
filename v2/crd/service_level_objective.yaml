@@ -1,0 +1,47 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  # name must match the spec fields below, and be in the form: <plural>.<group>
+  name: servicelevelobjectives.cloud.google.com
+spec:
+  # group name to use for REST API: /apis/<group>/<version>
+  group: cloud.google.com
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                goal:
+                  type: number
+                backend:
+                  type: string
+                backend/method:
+                  type: string
+                description:
+                  type: string
+                serviceLevelIndicator:
+                  type: object
+                  x-kubernetes-preserve-unknown-fields: true
+
+  # either Namespaced or Cluster
+  scope: Namespaced
+  names:
+    # plural name to be used in the URL: /apis/<group>/<version>/<plural>
+    plural: servicelevelobjectives
+    # singular name to be used as an alias on the CLI and for display
+    singular: servicelevelobjective
+    # kind is normally the CamelCased singular type. Your resource manifests use this.
+    kind: ServiceLevelObjective
+    # shortNames allow shorter string to match your resource on the CLI
+    shortNames:
+    - slo
+    - slos
