@@ -25,7 +25,7 @@ metadata:
 spec:
   description: <10% of errors in ELK records
   goal: 0.1
-  backend: elk
+  backend: elasticsearch
   exporters: [pubsub, cloud_monitoring]
   method: good_bad_ratio
   serviceLevelIndicator:
