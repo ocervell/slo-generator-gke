@@ -5,6 +5,15 @@ SERVICE_URL=`gcloud run services describe slo-generator --region=${REGION} --pro
 
 echo "⭐ Deploying SLOs to GCS ..."
 for slo_path in slos/*; do
-    echo "⭐ Testing ${slo_path} ..."
-    curl -X POST -H "Content-Type: text/x-yaml" --data-binary @${slo_path} ${SERVICE_URL} || "Test of ${slo_path} failed" && exit 1
+    slo_filename=$(basename -- "$slo_path")
+    slo_name="${slo_filename%.*}"
+
+    echo "⭐ Sending '${slo_path}' to GCS bucket '${BUCKET_NAME}' ..."
+    gsutil cp ${slo_path} gs://${BUCKET_NAME}/
+
+    echo "⭐ Creating Cloud Scheduler job '${slo_name}' ..."
+    gcloud scheduler jobs create http ${slo_name} --schedule="* * * * */1" \
+    --uri=${SERVICE_URL} \
+    --message-body="gs://${BUCKET_NAME}/${slo_path}" \
+    --project=${PROJECT_ID} || echo "Scheduler job '${slo_name}' already exist."
 done;

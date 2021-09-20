@@ -1,0 +1,23 @@
+name: Deploy SLO configs to GCS (Cloud Run)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - slos/*
+jobs:
+  deploy-cloudrun-slos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Deploy SLOs to GCS bucket
+        run: ./deploy_cloudrun_slos.sh
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          

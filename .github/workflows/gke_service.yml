@@ -1,0 +1,23 @@
+name: Deploy slo-generator cronjob (GKE)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - app.yaml
+      - config.yaml
+jobs:
+  deploy-gke-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Get container credentials
+        run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --project=${{ secrets.PROJECT_ID }}
+
+      - name: Install dependencies
+        run: ./deploy_gke_service.sh    
