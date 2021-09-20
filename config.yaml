@@ -1,10 +1,10 @@
-# Copyright 2020 Google LLC
+# Copyright 2019 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     https://www.apache.org/licenses/LICENSE-2.0
+#            http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,19 +12,95 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
+backends:
+  cloud_monitoring:
+    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+
+  cloud_service_monitoring:
+    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+
+  elasticsearch:
+    url: ${ELASTICSEARCH_URL}
+    index: test_data
+    dateField: last_updated
+
+  prometheus:
+    class: Prometheus
+    url: ${PROMETHEUS_PUSHGATEWAY_URL}
+
+exporters:
+  cloud-monitoring:
+    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+    metrics:
+      - type: custom.googleapis.com/slo/error_budget_burn_rate
+        metric_kind: GAUGE
+      - type: custom.googleapis.com/slo/sli_value
+        metric_kind: GAUGE
+
+  prometheus:
+    url: prom-gateway:8080
+    metrics:
+      - slo/error_budget_burn_rate
+      - slo/sli_value
+
+  bigquery:
+    projectId: ${BIGQUERY_PROJECT_ID}
+
+  pubsub:
+    projectId: ${PUBSUB_PROJECT_ID}
+    topicName: ${PUBSUB_TOPIC_NAME}
 
 error_budget_policies:
   default:
     steps:
     - name: 24 hours
-      burn_rate_threshold: 3
-      alert: true
-      message_alert: Page to defend the SLO
-      message_ok: Last 24 hours on track
       window: 86400
-    - name: 48 hours
-      burn_rate_threshold: 1.5
+      burn_rate_threshold: 4
       alert: true
       message_alert: Page to defend the SLO
-      message_ok: Last 48 hours on track
+      message_standard: Last 24 hours on track
+
+    - name: 48 hours
       window: 172800
+      burn_rate_threshold: 2
+      alert: true
+      message_alert: Page to defend the SLO
+      message_standard: Last 48 hours on track
+
+# alerting:
+#   backends:
+#     - name: cloud-monitoring
+#       class: CloudMonitoring
+#       projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+#       notifications:
+#         - channel-1
+#         - channel-2
+
+#     - name: prometheus-alert-manager
+#       class: AlertManager
+#       url: ${ALERT_MANAGER_URL}
+
+# alerts:
+#   - name: high-burn-rate
+#     backend: cloud-monitoring
+#     displayName: SLO burn rate too high
+#     combiner: OR
+#     conditions:
+#     - displayName: SLO burn rate
+#       conditionThreshold:
+#         aggregations:
+#           alignmentPeriod: 60s
+#           crossSeriesReducer: REDUCE_MEAN
+#           groupByFields:
+#               - project
+#               - resource.label.instance_id
+#               - resource.label.zone
+#           perSeriesAligner: ALIGN_MAX
+#       comparison: COMPARISON_GT
+#       duration: 900s
+#       filter: >
+#         metric.type=compute.googleapis.com/instance/cpu/utilization
+#         resource.type=gce_instance
+#       thresholdValue: auto
+#       trigger:
+#         count: 1

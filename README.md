@@ -1,37 +1,24 @@
 # SLO Generator GKE Deployment
 
-This repository is an example deployment of `slo-generator` v1.x to Google Kubernetes Engine.
-
-You will deploy:
-* 1 `Cronjob` to run `slo-generator` on a schedule
-* 2 `ConfigMap` objects for the Error Budget Policy and the SLO configurations.
+This repository is an example deployment of slo-generator to GKE. It uses a
+Cronjob to run slo-generator on a schedule, and mounts SLO configurations as a
+ConfigMap object.
 
 This allows to set up the SLO reporting pipeline on GKE directly.
 
 ## Build the Docker image
 Clone the `slo-generator` repo:
 ```
-git clone https://github.com/google/slo-generator
+git clone https://github.com/GoogleCloudPlatform/professional-services
 ```
 
-Build the `slo-generator` image using Cloud Build:
+Build the `slo-generator` image:
 ```
-cd slo-generator
+cd tools/slo-generator
 gcloud builds submit --tag=gcr.io/<PROJECT_ID>/slo-generator --project=<PROJECT_ID>
 ```
 
 ## Deploy to GKE
-
-### Clone this repository
-```
-git clone https://github.com/ocervello/slo-generator-gke
-```
-
-### Edit configuration
-* Review and edit the SLO configurations in `slos/` folder. Replace the
-`project_id` and other fields specific to your environment.
-
-* Review the `app.yaml` and replace the `image` url with yours.
 
 ### Quick deploy & updates
 A script has been created to automate deployment / updates to GKE:
@@ -73,7 +60,6 @@ To use the `slo-generator` with Cloud Monitoring (backend / exporter):
 
 
 * `StackdriverServiceMonitoring` backend:
-  * `roles/monitoring.viewer` on the Stackdriver host project.
   * `roles/monitoring.servicesEditor` on the Stackdriver host project.
 
 #### BigQuery
@@ -92,8 +78,8 @@ To use the `slo-generator` with PubSub (exporter only):
 
 **Build the Docker image:**
 ```
-git clone https://github.com/google/slo-generator
-cd slo-generator
+git clone https://github.com/GoogleCloudPlatform/professional-services
+cd tools/slo-generator
 docker build -t slo-generator .
 ```
 
