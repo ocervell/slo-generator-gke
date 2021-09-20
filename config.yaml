@@ -14,23 +14,22 @@
 ---
 backends:
   cloud_monitoring:
-    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+    projectId: slo-generator-ci-a2b4
 
   cloud_service_monitoring:
-    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+    projectId: slo-generator-ci-a2b4
 
   elasticsearch:
-    url: ${ELASTICSEARCH_URL}
+    url: localhost
     index: test_data
     dateField: last_updated
 
   prometheus:
-    class: Prometheus
-    url: ${PROMETHEUS_PUSHGATEWAY_URL}
+    url: localhost
 
 exporters:
   cloud-monitoring:
-    projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+    projectId: slo-generator-ci-a2b4
     metrics:
       - type: custom.googleapis.com/slo/error_budget_burn_rate
         metric_kind: GAUGE
@@ -44,11 +43,11 @@ exporters:
       - slo/sli_value
 
   bigquery:
-    projectId: ${BIGQUERY_PROJECT_ID}
+    projectId: slo-generator-ci-a2b4
 
   pubsub:
-    projectId: ${PUBSUB_PROJECT_ID}
-    topicName: ${PUBSUB_TOPIC_NAME}
+    projectId: slo-generator-ci-a2b4
+    topicName: slo-export
 
 error_budget_policies:
   default:
@@ -71,7 +70,7 @@ error_budget_policies:
 #   backends:
 #     - name: cloud-monitoring
 #       class: CloudMonitoring
-#       projectId: ${STACKDRIVER_HOST_PROJECT_ID}
+#       projectId: slo-generator-ci-a2b4
 #       notifications:
 #         - channel-1
 #         - channel-2

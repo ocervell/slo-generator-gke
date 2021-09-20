@@ -17,11 +17,11 @@ kind: ServiceLevelObjective
 metadata:
   name: generator-pubsub-ack
   labels:
-    service_name: generator
+    service_name: slo-generator
     feature_name: pubsub
     slo_name: coverage
-    team_name: app-team-1
-    env: dev
+    team_name: slo-generator-core
+    env: ci
 spec:
   description: 99% of outstanding PubSub messages are acknowledged
   goal: 0.99
@@ -30,10 +30,10 @@ spec:
   method: good_bad_ratio
   serviceLevelIndicator:
     filter_good: >
-      project="${project_id}"
+      project="slo-generator-ci-a2b4"
       metric.type="pubsub.googleapis.com/subscription/ack_message_count"
       resource.type="pubsub_subscription"
     filter_bad:  >
-      project="${project_id}"
+      project="slo-generator-ci-a2b4"
       metric.type="pubsub.googleapis.com/subscription/num_undelivered_messages"
       resource.type="pubsub_subscription"

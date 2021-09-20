@@ -25,7 +25,7 @@ metadata:
 spec:
   description: 98% of HTTP Load Balancer requests have latency < 724ms
   goal: 0.98
-  backend: cm
+  backend: cloud_monitoring
   exporters: [pubsub, cloud_monitoring]
   method: distribution_cut
   serviceLevelIndicator:

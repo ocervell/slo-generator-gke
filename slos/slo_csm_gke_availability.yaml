@@ -25,14 +25,14 @@ metadata:
 spec:
   description: 98% of GKE HTTP requests have valid HTTP response codes
   goal: 0.98
-  backend: csm
+  backend: cloud_service_monitoring
   exporters: [pubsub, cloud_monitoring]
   method: basic_sli
   serviceLevelIndicator:
     clusterIstio:
-      projectId: ${GKE_PROJECT_ID}
-      location: ${GKE_LOCATION}
-      clusterName: ${GKE_CLUSTER_NAME}
-      serviceNamespace: ${GKE_SERVICE_NAMESPACE}
-      serviceName: ${GKE_SERVICE_NAME}
+      projectId: microservices-demo-prod-a5b2
+      location: europe-west1
+      clusterName: demo
+      serviceNamespace: default
+      serviceName: adservice
     availability: {}

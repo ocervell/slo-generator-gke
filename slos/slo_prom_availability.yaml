@@ -21,7 +21,7 @@ metadata:
     feature_name: metrics
     slo_name: availability
     team_name: app-team-1
-    env: dev
+    env: ci
 spec:
   description: 99.9% of Prometheus requests have a valid HTTP status code
   goal: 0.999

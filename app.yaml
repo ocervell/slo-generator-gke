@@ -17,7 +17,7 @@ kind: CronJob
 metadata:
   name: slo-generator
 spec:
-  schedule: "* * * * */1"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
@@ -27,14 +27,14 @@ spec:
           - name: slo-generator
             image: gcr.io/slo-generator-ci-a2b4/slo-generator:2.0.0-rc3
             args:
+            - compute
             - -f
             - /etc/config/slos/
             - -c
             - /etc/config/config.yaml
-            - -e
-            - "true"
+            - --export
             volumeMounts:
-              - name: error-budget-policy
+              - name: config
                 mountPath: /etc/config/config.yaml
                 subPath: config.yaml
               - name: slos
