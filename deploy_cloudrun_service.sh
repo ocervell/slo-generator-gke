@@ -10,7 +10,7 @@ gsutil cp config.yaml gs://${BUCKET_NAME}/config.yaml
 
 echo "⭐ Deploying Cloud Run service ..."
 gcloud run deploy slo-generator \
---image gcr.io/slo-generator-ci-a2b4/slo-generator:2.0.0-rc3 \
+--image gcr.io/slo-generator-ci-a2b4/slo-generator:latest \
 --region=europe-west1 \
 --platform managed \
 --set-env-vars CONFIG_PATH=gs://${PROJECT_ID}/config.yaml \
