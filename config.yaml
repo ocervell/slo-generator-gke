@@ -14,22 +14,22 @@
 ---
 backends:
   cloud_monitoring:
-    projectId: slo-generator-ci-a2b4
+    project_id: slo-generator-ci-a2b4
 
   cloud_service_monitoring:
-    projectId: slo-generator-ci-a2b4
+    project_id: slo-generator-ci-a2b4
 
   elasticsearch:
     url: localhost
     index: test_data
-    dateField: last_updated
+    date_field: last_updated
 
   prometheus:
     url: localhost
 
 exporters:
   cloud_monitoring:
-    projectId: slo-generator-ci-a2b4
+    project_id: slo-generator-ci-a2b4
     metrics:
       - type: custom.googleapis.com/slo/error_budget_burn_rate
         metric_kind: GAUGE
@@ -43,10 +43,10 @@ exporters:
       - slo/sli_value
 
   bigquery:
-    projectId: slo-generator-ci-a2b4
+    project_id: slo-generator-ci-a2b4
 
   pubsub:
-    projectId: slo-generator-ci-a2b4
+    project_id: slo-generator-ci-a2b4
     topicName: slo-export
 
 error_budget_policies:
