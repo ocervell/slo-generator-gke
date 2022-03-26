@@ -28,11 +28,11 @@ spec:
   backend: cloud_service_monitoring
   exporters: [pubsub, cloud_monitoring]
   method: basic_sli
-  serviceLevelIndicator:
-    clusterIstio:
-      projectId: microservices-demo-prod-a5b2
+  service_level_indicator:
+    cluster_istio:
+      project_id: microservices-demo-prod-a5b2
       location: europe-west1
-      clusterName: demo
-      serviceNamespace: default
-      serviceName: adservice
+      cluster_name: demo
+      service_namespace: default
+      service_name: adservice
     availability: {}
