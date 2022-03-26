@@ -29,7 +29,7 @@ spec:
   exporters: [pubsub, cloud_monitoring]
   method: distribution_cut
   service_level_indicator:
-    filterValid: >
+    filter_valid: >
       project=slo-generator-ci-a2b4
       metric.type="loadbalancing.googleapis.com/https/total_latencies"
       resource.type="https_lb_rule"
